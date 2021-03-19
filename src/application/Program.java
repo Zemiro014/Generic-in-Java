@@ -1,27 +1,20 @@
 package application;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Program {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public static void main(String[] args) 
+	{
+		List<Integer> myInts = Arrays.asList(5, 2, 10);
 		
-		// O "Object" não é superTipo de "List"
-		List<Object> myObject = new ArrayList<>();
-		List <Integer> myInteger = new ArrayList<>();
-		
-		myObject = myInteger; // Erro de compilação
-		
-		
-		// O "superTipo" de List é o "?"
-		List<?> myObject1 = new ArrayList<>();
-		List <Integer> myInteger1 = new ArrayList<>();
-		
-		myObject1 = myInteger1;
-
+		printList(myInts);
 	}
 
+	// Método que recebe qualquer tipo de lista
+	public static void printList(List<?> list) {
+		for (Object obj : list) {
+			System.out.println(obj);
+		}
+	}
 }
