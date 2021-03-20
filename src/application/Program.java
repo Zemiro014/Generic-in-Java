@@ -11,20 +11,24 @@ import entity.Shape;
 public class Program {
 	public static void main(String[] args) 
 	{
-		List<Shape> myShapes = new ArrayList<>();
+		// Covariância: Permite obter elementos de uma lista mas não permite adicionar elemento a ele.
+		List<Integer> intList = new ArrayList<Integer>();
+		intList.add(10);
+		intList.add(5);
 		
-		myShapes.add(new Rectangle(3.0, 2.0));
-		myShapes.add(new Circle(2.0));
+		List<? extends Number> list = intList;
+		Number x = list.get(0);
+		list.add(20); // Erro de compilação
 		
-		System.out.println("Total area: "+ totalArea(myShapes));
+		// Contravariância: Permite adicionar elementos de uma lista mas não permite obter os elementos dela.
+		List<Object> myObjs = new ArrayList<Object>();
+		myObjs.add("Maria");
+		myObjs.add("Alex");
+		
+		List<? super Number> myNums = myObjs;
+		myNums.add(10);
+		myNums.add(3.14);
+		Number x = myNums.get(0); // Erro de compilação
 	}
 	
-	// Método que recebe uma lista de Shape assim como qualquer subClass do Shape
-	public static double totalArea(List<? extends Shape> list) {
-		double sum = 0.0;
-		for(Shape s : list) {
-			sum += s.area();
-		}
-		return sum;
-	}
 }
