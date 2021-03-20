@@ -1,20 +1,30 @@
 package application;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import entity.Circle;
+import entity.Rectangle;
+import entity.Shape;
+
+// Usando curinga delimitado
 public class Program {
 	public static void main(String[] args) 
 	{
-		List<Integer> myInts = Arrays.asList(5, 2, 10);
+		List<Shape> myShapes = new ArrayList<>();
 		
-		printList(myInts);
+		myShapes.add(new Rectangle(3.0, 2.0));
+		myShapes.add(new Circle(2.0));
+		
+		System.out.println("Total area: "+ totalArea(myShapes));
 	}
-
-	// Método que recebe qualquer tipo de lista
-	public static void printList(List<?> list) {
-		for (Object obj : list) {
-			System.out.println(obj);
+	
+	// Método que recebe uma lista de Shape assim como qualquer subClass do Shape
+	public static double totalArea(List<? extends Shape> list) {
+		double sum = 0.0;
+		for(Shape s : list) {
+			sum += s.area();
 		}
+		return sum;
 	}
 }
