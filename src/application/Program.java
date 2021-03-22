@@ -4,32 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// Passando uma Lista específica para uma Lista mais genérica
+import entity.Client;
+
+// ENtendendo o funcionamento do HashCode e Equals
 public class Program {
 
 	public static void main(String[] args) {
 		
-		List<Integer> myInts = Arrays.asList(1, 2, 3, 4);
-		List<Double> myDoubles = Arrays.asList(3.14, 6.28);
-		List<Object> myObjs = new ArrayList<Object>();
+		Client maria = new Client("Maria", "maria@gmail.com");
+		Client alex = new Client("Maria", "maria@gmail.com");
 		
-		copy(myInts, myObjs);
-		printList(myObjs);
+		System.out.println(maria.hashCode());
+		System.out.println(alex.hashCode());
 		
-		copy(myDoubles, myObjs);
-		printList(myObjs);
-	}
-
-	public static void copy(List<? extends Number> source, List<? super Number> destiny) {
-		for (Number number : source) {
-			destiny.add(number);
-		}
-	}
-
-	public static void printList(List<?> list) {
-		for (Object obj : list) {
-			System.out.print(obj + " ");
-		}
-		System.out.println();
+		System.out.println(maria.equals(alex)); // Faz a comparação do conteúdo dos 2 objectos
+		System.out.println(maria==alex); // Faz a comparação das referências dos 2 objectos
 	}
 }
