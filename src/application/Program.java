@@ -1,32 +1,47 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
-import entity.Product02;
+import entity.LogEntry;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		/*
-		 * Como a implementação TreeSet<>() do conjunto Set<T> faz a comparação dos
-		 * elementos?
-		 * 
-		 * Se na class "Product02" tiver declarado o método "CompareTo", então o
-		 * TreeSet<>() fará a compação com base a lógica implementado no método "compareTo". Mas se não for
-		 * implementado, ele lançará um ClassCastException
-		 * 
-		 * Para que o TreeSet<>() consiga ordenar os seus objectos, é preciso que a class do conjunto (Product02) implemente o Comparable
-		 */
-
-		Set<Product02> set = new TreeSet<>();
-		set.add(new Product02("TV", 900.0));
-		set.add(new Product02("Notebook", 1200.0));
-		set.add(new Product02("Tablet", 400.0));
-
-		for (Product02 p : set) {
-			System.out.println(p);
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Enter file full path: ");
+		String path = sc.nextLine();
+		
+		try(BufferedReader br = new BufferedReader(new FileReader(path))){ // FileReader Abre o arquivo especificado no caminho e disponibiliza ela no BufferReader
+			
+			Set<LogEntry> set = new HashSet<>(); // A escolha do HashSet foi por ele ser mais rápido e também pelo facto do problema não especificar a ordem de armazenamento
+			
+			String line = br.readLine(); // A primeira linha do aqruivo foi lida
+			
+			while(line != null) {
+				
+				String[] fields = line.split(" "); // Para cada linha lida no arquivo, divid o conteúdo desta linha baseado no espaço em branco e depois cria um array. 
+				String username = fields[0];
+				Date moment = Date.from(Instant.parse(fields[1]));
+				
+				set.add(new LogEntry(username, moment)); // Ele não aceita valores repetidos, ou seja, username repetidos (username é o campo definido como critério de comparação no HashCode Equals)
+				
+				line = br.readLine();
+			}
+			
+			System.out.println("Total users: " + set.size());
+			
+		} catch(IOException e) {
+			System.out.println("Error: "+e.getMessage());
 		}
+		sc.close();
 	}
 }
