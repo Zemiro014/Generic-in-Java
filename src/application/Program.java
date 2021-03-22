@@ -1,47 +1,45 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
-
-import entity.LogEntry;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
+		/*
+		 * Map<K, V>: é uma coleção de dados genérico baseado em pares Chave(K) / Valor(V)
+		 * 
+		 * Não admite repetições do objeto chave.
+		 * Os elementos são indexados pelo objeto chave (não possuem posição).
+		 * Acesso, inserção e remoção de elementos são rápidos
+		 * 
+		 * Uso comum: cookies, local storage, qualquer modelo chave-valor
+		 * 
+		 * 
+		 * Principais implementações:
+				• HashMap - mais rápido (operações O(1) em tabela hash) e não ordenado
+				• TreeMap - mais lento (operações O(log(n)) em árvore rubro-negra) e ordenado pelo
+				compareTo do objeto (ou Comparator)
+				• LinkedHashMap - velocidade intermediária e elementos na ordem em que são adicionados
+		 * */
+		Map<String, String> cookies = new TreeMap<>();
 		
-		System.out.print("Enter file full path: ");
-		String path = sc.nextLine();
+		cookies.put("username", "maria");
+		cookies.put("email", "maria@gmail.com");
+		cookies.put("phone", "99771122");
+		cookies.remove("email");
+		cookies.put("phone", "99771133");
 		
-		try(BufferedReader br = new BufferedReader(new FileReader(path))){ // FileReader Abre o arquivo especificado no caminho e disponibiliza ela no BufferReader
-			
-			Set<LogEntry> set = new HashSet<>(); // A escolha do HashSet foi por ele ser mais rápido e também pelo facto do problema não especificar a ordem de armazenamento
-			
-			String line = br.readLine(); // A primeira linha do aqruivo foi lida
-			
-			while(line != null) {
-				
-				String[] fields = line.split(" "); // Para cada linha lida no arquivo, divid o conteúdo desta linha baseado no espaço em branco e depois cria um array. 
-				String username = fields[0];
-				Date moment = Date.from(Instant.parse(fields[1]));
-				
-				set.add(new LogEntry(username, moment)); // Ele não aceita valores repetidos, ou seja, username repetidos (username é o campo definido como critério de comparação no HashCode Equals)
-				
-				line = br.readLine();
-			}
-			
-			System.out.println("Total users: " + set.size());
-			
-		} catch(IOException e) {
-			System.out.println("Error: "+e.getMessage());
+		System.out.println("Contains 'phone' key: " + cookies.containsKey("phone")); // Verificando se o Map contem a chave 'phone"
+		System.out.println("Phone number: " + cookies.get("phone")); // pegando o valor da chave 'phone'
+		System.out.println("Email: " + cookies.get("email")); // pegando o valor da chave 'email'
+		System.out.println("Size: " + cookies.size()); // pegando o tamanho do Map cookies
+		
+		System.out.println("ALL COOKIES:");
+		
+		for (String key : cookies.keySet()) { // Listando todos os valores do cookies
+			System.out.println(key + ": " + cookies.get(key));
 		}
-		sc.close();
 	}
 }
