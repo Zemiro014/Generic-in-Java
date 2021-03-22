@@ -1,34 +1,28 @@
 package application;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+
+import entity.Product02;
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		// Trabalhando com conjuntos: União, intercessão e diferença
-		
-		Set<Integer> a = new TreeSet<>(Arrays.asList(0,2,4,5,6,8,10));
-		Set<Integer> b = new TreeSet<>(Arrays.asList(5,6,7,8,9,10));
-		
-		//union
-		Set<Integer> c = new TreeSet<>(a);
-		//union: adicionar ao conjunto "c" aqueles elementos do conjunto "a" que não existem no conjunto "c"
-		c.addAll(b);
-		System.out.println(c);
-		
-		//intersection
-		Set<Integer> d = new TreeSet<>(a);
-		//intersection: reter ao conjunto "d" só aqueles elementos do conjunto que combinam com algum elemento do conjunto "b"
-		d.retainAll(b);
-		System.out.println(d);
-		
-		//difference
-		Set<Integer> e = new TreeSet<>(a);
-		//intersection: remover do conjunto "e" aqueles elementos do conjunto que não possuem combinação com algum elemento do conjunto "b"
-		e.removeAll(b);
-		System.out.println(e);
+		/*
+		 * Como o Set<T> faz a comparação dos elementos?
+		 * 
+		 * Se na class "Product02" tiver declarado os métodos HashCode Equals, então o Set<T> fará a compação com base o HasCode Equals do Product02.
+		 * Mas se não for implementado, ele fará a comparação por referência das instancias
+		 * 
+		 * 
+		 * */ 
+
+		Set<Product02> set = new HashSet<>();
+		set.add(new Product02("TV", 900.0));
+		set.add(new Product02("Notebook", 1200.0));
+		set.add(new Product02("Tablet", 400.0));
+		Product02 prod = new Product02("Notebook", 1200.0);
+		System.out.println(set.contains(prod));
 	}
 }
