@@ -1,7 +1,9 @@
 package application;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
+import entity.Product;
 
 public class Program {
 
@@ -23,23 +25,21 @@ public class Program {
 				compareTo do objeto (ou Comparator)
 				• LinkedHashMap - velocidade intermediária e elementos na ordem em que são adicionados
 		 * */
-		Map<String, String> cookies = new TreeMap<>();
+		Map<Product, Double> stock = new HashMap<>();
 		
-		cookies.put("username", "maria");
-		cookies.put("email", "maria@gmail.com");
-		cookies.put("phone", "99771122");
-		cookies.remove("email");
-		cookies.put("phone", "99771133");
+		Product p1 = new Product("Tv", 900.0);
+		Product p2 = new Product("Notebook", 1200.0);
+		Product p3 = new Product("Tablet", 400.0);
 		
-		System.out.println("Contains 'phone' key: " + cookies.containsKey("phone")); // Verificando se o Map contem a chave 'phone"
-		System.out.println("Phone number: " + cookies.get("phone")); // pegando o valor da chave 'phone'
-		System.out.println("Email: " + cookies.get("email")); // pegando o valor da chave 'email'
-		System.out.println("Size: " + cookies.size()); // pegando o tamanho do Map cookies
+		stock.put(p1, 10000.0);
+		stock.put(p2, 20000.0);
+		stock.put(p3, 15000.0);
 		
-		System.out.println("ALL COOKIES:");
+		Product ps = new Product("Tv", 900.0);
 		
-		for (String key : cookies.keySet()) { // Listando todos os valores do cookies
-			System.out.println(key + ": " + cookies.get(key));
-		}
+		/*
+		 * O containsKey só compara os valores de 2 objectos se na class de conjunto (Product) for implementado o 'HashCode Equals', caso contrário fará a comparação por referência de ponteiro
+		 * */ 
+		System.out.println("Contains 'ps' key: " + stock.containsKey(ps)); 
 	}
 }
